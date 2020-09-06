@@ -9,7 +9,7 @@ export class RecipesService {
 
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
+/*  private recipes: Recipe[] = [
     new Recipe(
       'Strawberry Jello Pie',
       'The best dessert hands down',
@@ -40,9 +40,11 @@ export class RecipesService {
         new Ingredient('Topping: tablespoons butter', 3),
         new Ingredient('Topping: cup panko bread crumbs', 1),
       ])
-  ];
+  ];*/
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  private recipes: Recipe[] = [];
+
+  constructor(private shoppingListService: ShoppingListService) {}
 
   getRecipes() {
     return this.recipes.slice();
@@ -63,6 +65,11 @@ export class RecipesService {
 
   deleteRecipe(index: number){
     this.recipes.splice(index, 1);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  setRecipes(recipes: Recipe[]){
+    this.recipes = recipes;
     this.recipesChanged.next(this.recipes.slice());
   }
 
